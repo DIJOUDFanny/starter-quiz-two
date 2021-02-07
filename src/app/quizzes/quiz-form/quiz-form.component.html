@@ -6,11 +6,16 @@
       <input class="input-custom" type="text" id="name" [formControlName]="'name'">
       <br>
     </label>
-    <label for="theme">
-      Theme <br>
-      <input class="input-custom" type="text" id="theme" [formControlName]="'theme'">
+    <label for="theme">Choose a theme:</label>
       <br>
-    </label>
+      <select class="input-custom" type="select" id="theme" [formControlName]="'theme'">
+      <br>
+        <option value = "">--Please choose an option--
+        </option>
+        <option *ngFor="let currentThemes of THEME_LIST" [value]="currentThemes">
+          {{currentThemes}}
+        </option>
+      </select>
     <br>
     <button type="submit" class="button-card" (click)="addQuiz()">Create</button>
   </form>

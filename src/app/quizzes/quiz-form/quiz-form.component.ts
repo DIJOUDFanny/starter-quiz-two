@@ -22,11 +22,14 @@ export class QuizFormComponent implements OnInit {
    */
   public quizForm: FormGroup;
 
+  public THEME_LIST: string[] = ['Actors', 'Sports', 'Musics', 'Cook'];
+
   constructor(public formBuilder: FormBuilder, public quizService: QuizService) {
     // Form creation
     this.quizForm = this.formBuilder.group({
       name: [''],
       theme: [''],
+      date: [new Date()],
       questions: [[]]
     });
     // You can also add validators to your inputs such as required, maxlength or even create your own validator!

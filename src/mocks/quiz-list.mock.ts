@@ -24,7 +24,7 @@ export const QUESTION_SPORT: Question = {
     },
     {
       value: 'rugby',
-      isCorrect: true,
+      isCorrect: false,
     },
     {
       value: 'foot',
