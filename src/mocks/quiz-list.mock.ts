@@ -37,11 +37,13 @@ export const QUIZ_LIST: Quiz[] = [
     {
         name: 'Les Stars', // What's happening if I change this value..?
         theme: 'Actor',
+        date: new Date(),
         questions: [QUESTION_ACTOR],
     },
     {
         name: 'Les Sports',
         theme: 'JO',
+        date: new Date(),
         questions: [QUESTION_SPORT],
     }
 ];

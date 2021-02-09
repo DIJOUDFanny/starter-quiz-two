@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { Quiz } from '../models/quiz.model';
-import { QUIZ_LIST } from '../mocks/quiz-list.mock';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
+import {Quiz} from '../models/quiz.model';
+import {QUIZ_LIST} from '../mocks/quiz-list.mock';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +13,17 @@ export class QuizService {
    * https://angular.io/docs/ts/latest/tutorial/toh-pt4.html
    */
 
-   /**
-    * The list of quiz.
-    * The list is retrieved from the mock.
-    */
+  /**
+   * The list of quiz.
+   * The list is retrieved from the mock.
+   */
   private quizzes: Quiz[] = QUIZ_LIST;
+
+  /**
+   *
+   * @private
+   */
+  private quizUrl = 'https://raw.githubusercontent.com/NablaT/starter-quiz-two/master/mock-quiz.json';
 
   /**
    * Observable which contains the list of the quiz.
@@ -24,13 +31,17 @@ export class QuizService {
    */
   public quizzes$: BehaviorSubject<Quiz[]> = new BehaviorSubject(QUIZ_LIST);
 
-  /**
-   * index of the Quiz that we want delete
-   * @private
-   */
-  private indexQuiz: number;
+  constructor(
+    private http: HttpClient) {
+    this.getQuizzes();
+  }
 
-  constructor() {
+  getQuizzes() {
+    this.http.get<Quiz[]>(this.quizUrl).subscribe((quizList) => {
+      this.quizzes = quizList;
+      console.log(quizList);
+      this.quizzes$.next(this.quizzes);
+    });
   }
 
   addQuiz(quiz: Quiz): void {
@@ -44,7 +55,7 @@ export class QuizService {
     this.quizzes.forEach((element, index) => {
       // tslint:disable-next-line:triple-equals
       if (element == quiz) {
-          this.quizzes.splice(index, 1);
+        this.quizzes.splice(index, 1);
       }
     });
     this.quizzes$.next(this.quizzes);
